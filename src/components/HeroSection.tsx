@@ -8,7 +8,7 @@ const HeroSection = () => {
   const [showDonations, setShowDonations] = useState(false);
 
   return (
-    <section className="min-h-[90vh] relative overflow-hidden">
+    <section className="relative overflow-hidden py-16 lg:py-20">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/5 -z-10" />
       <div 
@@ -16,8 +16,8 @@ const HeroSection = () => {
         bg-cover bg-center opacity-[0.03] -z-20" 
       />
       
-      <div className="container mx-auto px-6 py-20">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <div className="container mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -28,13 +28,13 @@ const HeroSection = () => {
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-medium mb-6">
               🌟 Making Dreams Come True
             </span>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
               Transform Lives
               <span className="block mt-2 bg-gradient-to-r from-primary via-purple-500 to-accent bg-clip-text text-transparent">
                 Through Giving
               </span>
             </h1>
-            <p className="text-xl text-secondary/80 mb-8 leading-relaxed max-w-xl">
+            <p className="text-lg md:text-xl text-secondary/80 mb-8 leading-relaxed max-w-xl">
               Join our mission to create lasting change through innovative solutions 
               and sustainable development. Every donation makes a difference.
             </p>
@@ -55,7 +55,7 @@ const HeroSection = () => {
             </div>
 
             {/* Impact Numbers */}
-            <div className="grid grid-cols-3 gap-6 mt-12">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-10">
               {[
                 { value: "50K+", label: "Lives Impacted" },
                 { value: "120+", label: "Active Projects" },
@@ -68,7 +68,7 @@ const HeroSection = () => {
                   transition={{ delay: 0.2 + index * 0.1 }}
                   className="text-center p-4 rounded-xl bg-white/80 backdrop-blur-sm border border-primary/10 hover:border-primary/20 transition-colors"
                 >
-                  <div className="text-2xl font-bold text-primary">{stat.value}</div>
+                  <div className="text-xl md:text-2xl font-bold text-primary">{stat.value}</div>
                   <div className="text-sm text-secondary/70">{stat.label}</div>
                 </motion.div>
               ))}
