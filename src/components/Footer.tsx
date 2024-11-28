@@ -107,16 +107,19 @@ const Footer = () => {
             <h4 className="text-lg font-semibold text-accent">Get Involved</h4>
             <ul className="space-y-3">
               {[
-                "Volunteer Opportunities",
-                "Donation Programs",
-                "Partner with Us",
-                "Fundraising Events",
-                "Corporate Sponsorship"
-              ].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-secondary-foreground/80 hover:text-accent transition-colors">
-                    {item}
-                  </a>
+                { to: "/volunteer", label: "Volunteer Opportunities" },
+                { to: "/donation-programs", label: "Donation Programs" },
+                { to: "/partnership", label: "Partner with Us" },
+                { to: "/fundraising", label: "Fundraising Events" },
+                { to: "/corporate-sponsorship", label: "Corporate Sponsorship" }
+              ].map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className="text-secondary-foreground/80 hover:text-accent transition-colors inline-block"
+                  >
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
