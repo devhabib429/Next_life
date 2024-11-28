@@ -4,13 +4,13 @@
 
 @layer base {
   body {
-    @apply bg-[#F5F5F7] text-secondary antialiased;
+    @apply bg-[#F6F6F7] text-secondary antialiased;
   }
 }
 
 @layer components {
   .glass-card {
-    @apply backdrop-blur-md bg-white/80 rounded-2xl shadow-lg border border-white/20;
+    @apply backdrop-blur-md bg-white/90 rounded-2xl shadow-lg border border-accent/20;
   }
   
   .section-padding {
@@ -18,7 +18,7 @@
   }
   
   .heading-xl {
-    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
   }
   
   .heading-lg {
@@ -27,5 +27,9 @@
   
   .body-text {
     @apply text-lg text-secondary/80 leading-relaxed;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
   }
 }
