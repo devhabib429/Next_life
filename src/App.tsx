@@ -10,11 +10,6 @@ import About from "./pages/About";
 import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 import Donors from "./pages/Donors";
-import Volunteer from "./pages/Volunteer";
-import DonationPrograms from "./pages/DonationPrograms";
-import Partnership from "./pages/Partnership";
-import Fundraising from "./pages/Fundraising";
-import CorporateSponsorship from "./pages/CorporateSponsorship";
 
 const queryClient = new QueryClient();
 
@@ -33,11 +28,6 @@ const App = () => (
               <Route path="/projects" element={<Projects />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/donors" element={<Donors />} />
-              <Route path="/volunteer" element={<Volunteer />} />
-              <Route path="/donation-programs" element={<DonationPrograms />} />
-              <Route path="/partnership" element={<Partnership />} />
-              <Route path="/fundraising" element={<Fundraising />} />
-              <Route path="/corporate-sponsorship" element={<CorporateSponsorship />} />
             </Routes>
           </main>
           <Footer />
