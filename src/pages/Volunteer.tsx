@@ -4,15 +4,15 @@ import { Button } from "@/components/ui/button";
 
 const Volunteer = () => {
   return (
-    <div className="min-h-screen py-12 sm:py-20 px-4 sm:px-6">
-      <div className="container mx-auto">
+    <div className="min-h-screen py-12 sm:py-20">
+      <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8 sm:mb-16"
         >
           <h1 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4">Volunteer Opportunities</h1>
-          <p className="text-secondary/70 max-w-2xl mx-auto text-sm sm:text-base px-4">
+          <p className="text-secondary/70 max-w-2xl mx-auto text-sm sm:text-base">
             Join our community of dedicated volunteers and make a real difference in the lives of others.
             We offer various opportunities to match your skills and interests.
           </p>
