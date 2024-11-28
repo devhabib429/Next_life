@@ -4,13 +4,13 @@
 
 @layer base {
   body {
-    @apply bg-[#F6F6F7] text-secondary antialiased;
+    @apply bg-[#F8FAFC] text-secondary antialiased;
   }
 }
 
 @layer components {
   .glass-card {
-    @apply backdrop-blur-md bg-white/90 rounded-2xl shadow-lg border border-accent/20;
+    @apply backdrop-blur-md bg-white/90 rounded-2xl shadow-sm border border-accent/10 hover:border-accent/20 transition-colors;
   }
   
   .section-padding {
