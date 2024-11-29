@@ -20,7 +20,7 @@ const Footer = () => {
               <div className="flex items-center gap-2">
                 <Heart className="w-8 h-8 text-primary" />
                 <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                  NGOWebverse
+                  NextLife
                 </h3>
               </div>
               <p className="text-secondary-foreground/80 leading-relaxed max-w-md">
@@ -95,18 +95,18 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-secondary-foreground/80">
                 <MapPin className="w-5 h-5 text-accent mt-1" />
-                <span>123 NGO Street, Charity Square<br />New York, NY 12345</span>
+                <span>Hazrat Nizamuddin Colony<br />Bhopal, MP 462022</span>
               </li>
               <li className="flex items-center gap-3 text-secondary-foreground/80">
                 <Mail className="w-5 h-5 text-accent" />
-                <a href="mailto:contact@ngowebverse.org" className="hover:text-accent transition-colors">
-                  contact@ngowebverse.org
+                <a href="mailto:contact@nextlife.in" className="hover:text-accent transition-colors">
+                  contact@nextlife.in
                 </a>
               </li>
               <li className="flex items-center gap-3 text-secondary-foreground/80">
                 <Phone className="w-5 h-5 text-accent" />
-                <a href="tel:+15551234567" className="hover:text-accent transition-colors">
-                  (555) 123-4567
+                <a href="tel:+918874131212" className="hover:text-accent transition-colors">
+                  +91 8874131212
                 </a>
               </li>
             </ul>
@@ -159,7 +159,6 @@ const Footer = () => {
           </div>
         </div>
         
-        {/* Bottom Section */}
         <div className="px-6 py-8 text-center">
           <p className="text-secondary-foreground/60 text-sm">
             &copy; {new Date().getFullYear()} NGOWebverse. All rights reserved. | 

@@ -1,8 +1,12 @@
 import { motion } from "framer-motion";
 import { Calendar, Users, Heart, Award, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import VolunteerForm from "@/components/VolunteerForm";
 
 const Volunteer = () => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
   return (
     <div className="min-h-screen py-12 sm:py-20 overflow-x-hidden">
       <div className="container mx-auto px-4">
@@ -71,7 +75,7 @@ const Volunteer = () => {
                 <p>Time Commitment: {opportunity.commitment}</p>
                 <p>Impact: {opportunity.impact}</p>
               </div>
-              <Button className="w-full mt-4">Apply Now</Button>
+              <Button className="w-full mt-4" onClick={() => setIsFormOpen(true)}>Apply Now</Button>
             </motion.div>
           ))}
         </div>
@@ -82,9 +86,13 @@ const Volunteer = () => {
             Fill out our volunteer application form and join our community of change-makers.
             We'll match you with opportunities that align with your interests and availability.
           </p>
-          <Button size="lg" className="w-full sm:w-auto">Start Volunteering Today</Button>
+          <Button size="lg" className="w-full sm:w-auto" onClick={() => setIsFormOpen(true)}>
+            Start Volunteering Today
+          </Button>
         </div>
       </div>
+
+      <VolunteerForm open={isFormOpen} onOpenChange={setIsFormOpen} />
     </div>
   );
 };

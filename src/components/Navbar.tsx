@@ -22,7 +22,7 @@ const Navbar = () => {
           <Link to="/" className="flex items-center gap-2">
             <Heart className="w-8 h-8 text-primary" />
             <span className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              NGOWebverse
+              NextLife
             </span>
           </Link>
           
