@@ -3,9 +3,11 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import DonationModal from "./DonationModal";
+import VolunteerForm from "./VolunteerForm";
 
 const HeroSection = () => {
   const [showDonations, setShowDonations] = useState(false);
+  const [showVolunteerForm, setShowVolunteerForm] = useState(false);
 
   return (
     <section className="relative overflow-hidden py-16 lg:py-20">
@@ -95,6 +97,7 @@ const HeroSection = () => {
       </div>
 
       <DonationModal open={showDonations} onOpenChange={setShowDonations} />
+      <VolunteerForm open={showVolunteerForm} onOpenChange={setShowVolunteerForm} />
     </section>
   );
 };
