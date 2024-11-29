@@ -3,8 +3,12 @@ import { motion } from "framer-motion";
 import { Globe, Users, Target, Sparkles, BarChart3, Heart, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useState } from "react";
+import VolunteerForm from "@/components/VolunteerForm";
 
 const Index = () => {
+  const [isVolunteerFormOpen, setIsVolunteerFormOpen] = useState(false);
+
   return (
     <div className="min-h-screen">
       <HeroSection />
@@ -160,6 +164,7 @@ const Index = () => {
                 size="lg"
                 variant="outline"
                 className="border-white text-white hover:bg-white/10"
+                onClick={() => setIsVolunteerFormOpen(true)}
               >
                 Become a Volunteer
               </Button>
@@ -167,6 +172,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <VolunteerForm open={isVolunteerFormOpen} onOpenChange={setIsVolunteerFormOpen} />
     </div>
   );
 };
