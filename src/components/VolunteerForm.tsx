@@ -10,6 +10,14 @@ interface VolunteerFormProps {
   onOpenChange: (open: boolean) => void;
 }
 
+const toastStyles = [
+  { bg: "bg-primary text-white", title: "Thank you!" },
+  { bg: "bg-accent text-white", title: "Wonderful!" },
+  { bg: "bg-[#8B5CF6] text-white", title: "Amazing!" },
+  { bg: "bg-[#D946EF] text-white", title: "Fantastic!" },
+  { bg: "bg-[#F97316] text-white", title: "Great!" },
+];
+
 const VolunteerForm = ({ open, onOpenChange }: VolunteerFormProps) => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
@@ -22,11 +30,14 @@ const VolunteerForm = ({ open, onOpenChange }: VolunteerFormProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the data to your backend
+    const randomStyle = toastStyles[Math.floor(Math.random() * toastStyles.length)];
+    
     toast({
-      title: "Success!",
+      title: randomStyle.title,
       description: "Your volunteer application has been submitted successfully. We'll contact you soon!",
+      className: `${randomStyle.bg} border-none`,
     });
+    
     onOpenChange(false);
     setFormData({
       name: "",
