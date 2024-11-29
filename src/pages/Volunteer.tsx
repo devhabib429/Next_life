@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 const Volunteer = () => {
   return (
-    <div className="min-h-screen py-12 sm:py-20">
+    <div className="min-h-screen py-12 sm:py-20 overflow-x-hidden">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

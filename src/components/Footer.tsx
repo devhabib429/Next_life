@@ -2,6 +2,14 @@ import { Link } from "react-router-dom";
 import { Facebook, Twitter, Instagram, Mail, Phone, MapPin, Heart, Globe, Users, Shield } from "lucide-react";
 
 const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    scrollToTop();
+  };
+
   return (
     <footer className="bg-gradient-to-b from-secondary to-secondary/95 text-secondary-foreground">
       <div className="container mx-auto">
@@ -73,6 +81,7 @@ const Footer = () => {
                   <Link 
                     to={link.to} 
                     className="text-secondary-foreground/80 hover:text-accent transition-colors inline-block"
+                    onClick={handleLinkClick}
                   >
                     {link.label}
                   </Link>
@@ -117,6 +126,7 @@ const Footer = () => {
                   <Link
                     to={link.to}
                     className="text-secondary-foreground/80 hover:text-accent transition-colors inline-block"
+                    onClick={handleLinkClick}
                   >
                     {link.label}
                   </Link>
