@@ -58,9 +58,9 @@ const VolunteerForm = ({ open, onOpenChange }: VolunteerFormProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px] bg-white">
+      <DialogContent className="w-[95%] max-w-[425px] p-4 sm:p-6 bg-white">
         <DialogHeader>
-          <DialogTitle>Volunteer Application</DialogTitle>
+          <DialogTitle className="text-xl sm:text-2xl">Volunteer Application</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>

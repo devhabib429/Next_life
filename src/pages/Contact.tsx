@@ -20,9 +20,9 @@ const Contact = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
+      <section className="relative py-12 sm:py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-muted/50 to-transparent -z-10" />
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -31,16 +31,16 @@ const Contact = () => {
             <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary mb-6">
               Contact Us
             </span>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Get in Touch</h1>
-            <p className="text-xl text-secondary/80 leading-relaxed">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">Get in Touch</h1>
+            <p className="text-lg sm:text-xl text-secondary/80 leading-relaxed">
               Have questions or want to get involved? We'd love to hear from you.
             </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-20">
-        <div className="container mx-auto px-6">
+      <section className="py-12 sm:py-20">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Contact Information */}
             <motion.div
@@ -50,42 +50,54 @@ const Contact = () => {
               className="lg:col-span-1"
             >
               <div className="space-y-6">
-                {[
-                  {
-                    icon: MapPin,
-                    title: "Visit Us",
-                    details: ["123 NGO Street", "City, State 12345"]
-                  },
-                  {
-                    icon: Phone,
-                    title: "Call Us",
-                    details: ["(555) 123-4567", "Mon-Fri 9am-5pm"]
-                  },
-                  {
-                    icon: Mail,
-                    title: "Email Us",
-                    details: ["contact@ngowebverse.org", "support@ngowebverse.org"]
-                  },
-                  {
-                    icon: Clock,
-                    title: "Working Hours",
-                    details: ["Monday - Friday", "9:00 AM - 5:00 PM"]
-                  }
-                ].map((item, index) => (
-                  <Card key={index} className="p-6 glass-card">
-                    <div className="flex items-start">
-                      <div className="p-3 rounded-full bg-primary/10 mr-4">
-                        <item.icon className="w-6 h-6 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold mb-2">{item.title}</h3>
-                        {item.details.map((detail, i) => (
-                          <p key={i} className="text-secondary/70">{detail}</p>
-                        ))}
-                      </div>
+                <Card className="p-6 glass-card">
+                  <div className="flex items-start">
+                    <div className="p-3 rounded-full bg-primary/10 mr-4">
+                      <MapPin className="w-6 h-6 text-primary" />
                     </div>
-                  </Card>
-                ))}
+                    <div>
+                      <h3 className="font-semibold mb-2">Visit Us</h3>
+                      <p className="text-secondary/70">Hazrat Nizamuddin Colony</p>
+                      <p className="text-secondary/70">Bhopal, MP 462022</p>
+                    </div>
+                  </div>
+                </Card>
+                <Card className="p-6 glass-card">
+                  <div className="flex items-start">
+                    <div className="p-3 rounded-full bg-primary/10 mr-4">
+                      <Phone className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold mb-2">Call Us</h3>
+                      <p className="text-secondary/70">(555) 123-4567</p>
+                      <p className="text-secondary/70">Mon-Fri 9am-5pm</p>
+                    </div>
+                  </div>
+                </Card>
+                <Card className="p-6 glass-card">
+                  <div className="flex items-start">
+                    <div className="p-3 rounded-full bg-primary/10 mr-4">
+                      <Mail className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold mb-2">Email Us</h3>
+                      <p className="text-secondary/70">contact@ngowebverse.org</p>
+                      <p className="text-secondary/70">support@ngowebverse.org</p>
+                    </div>
+                  </div>
+                </Card>
+                <Card className="p-6 glass-card">
+                  <div className="flex items-start">
+                    <div className="p-3 rounded-full bg-primary/10 mr-4">
+                      <Clock className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold mb-2">Working Hours</h3>
+                      <p className="text-secondary/70">Monday - Friday</p>
+                      <p className="text-secondary/70">9:00 AM - 5:00 PM</p>
+                    </div>
+                  </div>
+                </Card>
               </div>
             </motion.div>
 
@@ -139,8 +151,8 @@ const Contact = () => {
       </section>
 
       {/* Map Section */}
-      <section className="py-20 bg-muted">
-        <div className="container mx-auto px-6 text-center">
+      <section className="py-12 sm:py-20 bg-muted">
+        <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-6">Our Location</h2>
           <p className="text-xl text-secondary/70 mb-8">
             Visit us at our office to learn more about our work and how you can get involved.
