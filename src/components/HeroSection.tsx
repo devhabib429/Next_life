@@ -14,17 +14,14 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center max-w-4xl mx-auto"
         >
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+          <h1 className="heading-xl mb-6">
             Making a Difference, One Life at a Time
           </h1>
-          <p className="text-lg md:text-xl text-secondary/70 mb-8 max-w-2xl mx-auto">
+          <p className="body-text mb-8 max-w-2xl mx-auto">
             Join us in our mission to create positive change and empower communities worldwide through sustainable development and compassionate action.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="bg-primary hover:bg-primary/90 text-white px-8"
-            >
+            <Button size="lg" className="bg-primary hover:bg-primary/90">
               Donate Now
             </Button>
             <Button 
