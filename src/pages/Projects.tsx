@@ -1,14 +1,13 @@
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Calendar, MapPin, Users } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Users, Target, Heart, Lightbulb } from "lucide-react";
 
 const Projects = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-accent/20 to-transparent -z-10" />
+      <section className="relative py-20 overflow-hidden bg-gradient-to-b from-primary/5 to-transparent">
         <div className="container mx-auto px-6">
           <motion.div 
             initial={{ opacity: 0 }}
@@ -16,14 +15,43 @@ const Projects = () => {
             className="text-center max-w-3xl mx-auto"
           >
             <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary mb-6">
-              Our Projects
+              Our Impact
             </span>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Making Real Impact</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">Transforming Lives Through Action</h1>
             <p className="text-xl text-secondary/80 leading-relaxed">
-              Explore our ongoing projects and initiatives that are making a difference 
-              in communities around the world.
+              Discover our innovative projects that are making real differences in communities worldwide.
+              Join us in creating lasting positive change.
             </p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Impact Statistics */}
+      <section className="py-12 bg-muted">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-8">
+            {[
+              { number: "50+", label: "Active Projects", icon: Target },
+              { number: "100K+", label: "Lives Impacted", icon: Heart },
+              { number: "25+", label: "Countries Reached", icon: MapPin },
+              { number: "10K+", label: "Volunteers", icon: Users }
+            ].map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="text-center"
+              >
+                <div className="glass-card p-6">
+                  <stat.icon className="w-8 h-8 text-primary mx-auto mb-4" />
+                  <h3 className="text-3xl font-bold mb-2 gradient-text">{stat.number}</h3>
+                  <p className="text-secondary/70">{stat.label}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -125,18 +153,47 @@ const Projects = () => {
         </div>
       </section>
 
-      {/* Get Involved */}
-      <section className="py-20 bg-muted">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-4xl font-bold mb-6">Want to Get Involved?</h2>
-          <p className="text-xl text-secondary/70 mb-8 max-w-2xl mx-auto">
-            Join us in making a difference. Whether through volunteering, donations, or 
-            partnerships, there are many ways to support our projects.
-          </p>
-          <Button size="lg" className="group">
-            Contact Us Today
-            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
+      {/* Project Categories */}
+      <section className="py-20 bg-muted/50">
+        <div className="container mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-12">Our Focus Areas</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Education Initiatives",
+                description: "Empowering communities through knowledge and skill development.",
+                icon: Lightbulb,
+                projects: "12 active projects"
+              },
+              {
+                title: "Healthcare Access",
+                description: "Providing essential medical services to underserved areas.",
+                icon: Heart,
+                projects: "8 active projects"
+              },
+              {
+                title: "Sustainable Development",
+                description: "Creating long-term solutions for environmental challenges.",
+                icon: Target,
+                projects: "15 active projects"
+              }
+            ].map((category, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Card className="p-6 glass-card hover:shadow-lg transition-shadow">
+                  <category.icon className="w-12 h-12 text-primary mb-4" />
+                  <h3 className="text-xl font-semibold mb-2">{category.title}</h3>
+                  <p className="text-secondary/70 mb-4">{category.description}</p>
+                  <p className="text-sm text-primary">{category.projects}</p>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
     </div>
