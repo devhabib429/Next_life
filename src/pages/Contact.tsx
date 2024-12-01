@@ -54,22 +54,22 @@ const Contact = () => {
                   {
                     icon: MapPin,
                     title: "Visit Us",
-                    details: ["123 NGO Street", "City, State 12345"]
+                    details: ["456 NGO Plaza, Suite 789", "San Francisco, CA 94105"]
                   },
                   {
                     icon: Phone,
                     title: "Call Us",
-                    details: ["(555) 123-4567", "Mon-Fri 9am-5pm"]
+                    details: ["+1 (415) 555-0123", "Mon-Fri 9am-6pm PST"]
                   },
                   {
                     icon: Mail,
                     title: "Email Us",
-                    details: ["contact@ngowebverse.org", "support@ngowebverse.org"]
+                    details: ["info@ngowebverse.org", "support@ngowebverse.org"]
                   },
                   {
                     icon: Clock,
                     title: "Working Hours",
-                    details: ["Monday - Friday", "9:00 AM - 5:00 PM"]
+                    details: ["Monday - Friday", "9:00 AM - 6:00 PM PST"]
                   }
                 ].map((item, index) => (
                   <Card key={index} className="p-6 glass-card">
