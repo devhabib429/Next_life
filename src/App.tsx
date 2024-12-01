@@ -15,6 +15,7 @@ import DonationPrograms from "./pages/DonationPrograms";
 import Partnership from "./pages/Partnership";
 import Fundraising from "./pages/Fundraising";
 import CorporateSponsorship from "./pages/CorporateSponsorship";
+import AdminDashboard from "./pages/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,7 @@ const App = () => (
               <Route path="/partnership" element={<Partnership />} />
               <Route path="/fundraising" element={<Fundraising />} />
               <Route path="/corporate-sponsorship" element={<CorporateSponsorship />} />
+              <Route path="/admin" element={<AdminDashboard />} />
             </Routes>
           </main>
           <Footer />
