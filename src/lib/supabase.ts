@@ -1,11 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = 'https://ioptegmxiynkjpxczyak.supabase.co';
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-if (!supabaseKey) {
-  throw new Error('VITE_SUPABASE_ANON_KEY is required. Please add it to your .env file.');
-}
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlvcHRlZ214aXlua2pweGN6eWFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMxMzM2MDgsImV4cCI6MjA0ODcwOTYwOH0.KKENn8nZHPy5FaUBq0LT_5cCbMcdZWoZ2OgVtdvjvGs';
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
