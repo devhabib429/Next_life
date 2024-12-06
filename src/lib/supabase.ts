@@ -16,11 +16,21 @@ export async function fetchTeamMembers() {
 }
 
 export async function addTeamMember(member: { name: string; role: string; experience: string }) {
+  // Add console.log to debug the input data
+  console.log('Adding team member:', member);
+  
   const { data, error } = await supabase
     .from('team_members')
-    .insert([member])
+    .insert([{
+      name: member.name,
+      role: member.role,
+      experience: member.experience
+    }])
     .select();
-  if (error) throw error;
+  if (error) {
+    console.error('Error adding team member:', error);
+    throw error;
+  }
   return data[0];
 }
 
@@ -165,3 +175,4 @@ export async function deleteAddress(id: number) {
     .eq('id', id);
   if (error) throw error;
 }
+
