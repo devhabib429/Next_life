@@ -11,22 +11,22 @@ export async function fetchTeamMembers() {
     .from('team_members')
     .select('*')
     .order('id');
-  if (error) throw error;
+  
+  if (error) {
+    console.error('Error fetching team members:', error);
+    throw error;
+  }
   return data;
 }
 
 export async function addTeamMember(member: { name: string; role: string; experience: string }) {
-  // Add console.log to debug the input data
   console.log('Adding team member:', member);
   
   const { data, error } = await supabase
     .from('team_members')
-    .insert([{
-      name: member.name,
-      role: member.role,
-      experience: member.experience
-    }])
+    .insert([member])
     .select();
+
   if (error) {
     console.error('Error adding team member:', error);
     throw error;
@@ -39,7 +39,11 @@ export async function deleteTeamMember(id: number) {
     .from('team_members')
     .delete()
     .eq('id', id);
-  if (error) throw error;
+    
+  if (error) {
+    console.error('Error deleting team member:', error);
+    throw error;
+  }
 }
 
 // Project Stats

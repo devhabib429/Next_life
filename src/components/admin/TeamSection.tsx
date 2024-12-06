@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Users, Trash2 } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchTeamMembers, addTeamMember, deleteTeamMember } from "@/lib/supabase";
@@ -11,6 +11,7 @@ const TeamSection = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [newTeamMember, setNewTeamMember] = useState({ name: "", role: "", experience: "" });
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const { data: teamMembers = [], isLoading } = useQuery({
     queryKey: ['teamMembers'],
@@ -22,9 +23,16 @@ const TeamSection = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['teamMembers'] });
       toast({ title: "Success", description: "Team member added successfully" });
+      setIsDialogOpen(false);
+      setNewTeamMember({ name: "", role: "", experience: "" });
     },
     onError: (error) => {
-      toast({ title: "Error", description: "Failed to add team member", variant: "destructive" });
+      console.error('Error adding team member:', error);
+      toast({ 
+        title: "Error", 
+        description: "Failed to add team member. Please try again.", 
+        variant: "destructive" 
+      });
     }
   });
 
@@ -35,9 +43,27 @@ const TeamSection = () => {
       toast({ title: "Success", description: "Team member deleted successfully" });
     },
     onError: (error) => {
-      toast({ title: "Error", description: "Failed to delete team member", variant: "destructive" });
+      console.error('Error deleting team member:', error);
+      toast({ 
+        title: "Error", 
+        description: "Failed to delete team member", 
+        variant: "destructive" 
+      });
     }
   });
+
+  const handleSubmit = () => {
+    if (!newTeamMember.name || !newTeamMember.role || !newTeamMember.experience) {
+      toast({
+        title: "Validation Error",
+        description: "Please fill in all fields",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    addMemberMutation.mutate(newTeamMember);
+  };
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -45,7 +71,7 @@ const TeamSection = () => {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold">Leadership Team</h3>
-        <Dialog>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button>
               <Users className="w-4 h-4 mr-2" />
@@ -55,6 +81,9 @@ const TeamSection = () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Add Team Member</DialogTitle>
+              <DialogDescription>
+                Add a new member to your leadership team. All fields are required.
+              </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
               <Input
@@ -68,15 +97,15 @@ const TeamSection = () => {
                 onChange={(e) => setNewTeamMember({ ...newTeamMember, role: e.target.value })}
               />
               <Input
-                placeholder="Experience"
+                placeholder="Experience (e.g., '15+ years')"
                 value={newTeamMember.experience}
                 onChange={(e) => setNewTeamMember({ ...newTeamMember, experience: e.target.value })}
               />
-              <Button onClick={() => {
-                addMemberMutation.mutate(newTeamMember);
-                setNewTeamMember({ name: "", role: "", experience: "" });
-              }}>
-                Add Member
+              <Button 
+                onClick={handleSubmit}
+                disabled={addMemberMutation.isPending}
+              >
+                {addMemberMutation.isPending ? "Adding..." : "Add Member"}
               </Button>
             </div>
           </DialogContent>
@@ -93,6 +122,7 @@ const TeamSection = () => {
             variant="destructive"
             size="sm"
             onClick={() => deleteMemberMutation.mutate(member.id)}
+            disabled={deleteMemberMutation.isPending}
           >
             <Trash2 className="w-4 h-4" />
           </Button>
