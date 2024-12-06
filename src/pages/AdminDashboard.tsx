@@ -21,34 +21,53 @@ const AdminDashboard = () => {
   }, isLoading } = useQuery({
     queryKey: ['dashboardStats'],
     queryFn: async () => {
-      // Fetch donations total
-      const { data: donations } = await supabase
-        .from('donations')
-        .select('amount');
-      const totalDonations = donations?.reduce((sum, d) => sum + d.amount, 0) || 0;
+      try {
+        // Fetch donations total - handle if table doesn't exist
+        const donations = await supabase.from('donations').select('amount');
+        const totalDonations = donations.data?.reduce((sum, d) => sum + d.amount, 0) || 0;
 
-      // Count active volunteers
-      const { count: activeVolunteers } = await supabase
-        .from('volunteers')
-        .select('*', { count: 'exact', head: true })
-        .eq('status', 'Active');
+        // Count active volunteers - handle if table doesn't exist
+        const volunteers = await supabase
+          .from('volunteers')
+          .select('*', { count: 'exact', head: true })
+          .eq('status', 'Active');
+        const activeVolunteers = volunteers.count || 0;
 
-      // Count total projects
-      const { count: totalProjects } = await supabase
-        .from('projects')
-        .select('*', { count: 'exact', head: true });
+        // Count total projects - handle if table doesn't exist
+        const projects = await supabase
+          .from('projects')
+          .select('*', { count: 'exact', head: true });
+        const totalProjects = projects.count || 0;
 
-      // Count total messages
-      const { count: totalMessages } = await supabase
-        .from('messages')
-        .select('*', { count: 'exact', head: true });
+        // Count total messages - handle if table doesn't exist
+        const messages = await supabase
+          .from('messages')
+          .select('*', { count: 'exact', head: true });
+        const totalMessages = messages.count || 0;
 
-      return {
-        totalDonations,
-        activeVolunteers: activeVolunteers || 0,
-        totalProjects: totalProjects || 0,
-        totalMessages: totalMessages || 0
-      };
+        console.log('Dashboard stats fetched:', {
+          totalDonations,
+          activeVolunteers,
+          totalProjects,
+          totalMessages
+        });
+
+        return {
+          totalDonations,
+          activeVolunteers,
+          totalProjects,
+          totalMessages
+        };
+      } catch (error) {
+        console.error('Error fetching dashboard stats:', error);
+        // Return default values if there's an error
+        return {
+          totalDonations: 0,
+          activeVolunteers: 0,
+          totalProjects: 0,
+          totalMessages: 0
+        };
+      }
     }
   });
 
