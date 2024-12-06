@@ -5,56 +5,6 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Volunteers
-export async function fetchVolunteers() {
-  const { data, error } = await supabase
-    .from('volunteers')
-    .select('*')
-    .order('id');
-  
-  if (error) {
-    console.error('Error fetching volunteers:', error);
-    throw error;
-  }
-  return data;
-}
-
-export async function addVolunteer(volunteer: {
-  name: string;
-  email: string;
-  role: string;
-  status: string;
-  phone: string;
-  skills: string[];
-  join_date: string;  // Changed from joinDate to join_date
-}) {
-  const { data, error } = await supabase
-    .from('volunteers')
-    .insert([{
-      ...volunteer,
-      join_date: volunteer.join_date  // Changed from joinDate to join_date
-    }])
-    .select();
-
-  if (error) {
-    console.error('Error adding volunteer:', error);
-    throw error;
-  }
-  return data[0];
-}
-
-export async function updateVolunteerStatus(id: number, status: string) {
-  const { error } = await supabase
-    .from('volunteers')
-    .update({ status })
-    .eq('id', id);
-
-  if (error) {
-    console.error('Error updating volunteer status:', error);
-    throw error;
-  }
-}
-
 // Team Members
 export async function fetchTeamMembers() {
   const { data, error } = await supabase
