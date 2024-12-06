@@ -6,7 +6,7 @@ interface Volunteer {
   email: string;
   role: string;
   status: string;
-  joinDate: string;
+  join_date: string;  // Changed from joinDate to join_date
   phone: string;
   skills: string[];
 }
@@ -61,7 +61,7 @@ const VolunteerDetails = ({ volunteer, onClose }: VolunteerDetailsProps) => {
           </div>
           <div>
             <p className="text-sm font-medium">Join Date</p>
-            <p className="text-sm text-muted-foreground">{volunteer.joinDate}</p>
+            <p className="text-sm text-muted-foreground">{volunteer.join_date}</p>
           </div>
         </div>
       </DialogContent>

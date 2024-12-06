@@ -22,7 +22,7 @@ const AddVolunteerDialog = ({ onAdd }: AddVolunteerDialogProps) => {
     onAdd({
       ...newVolunteer,
       status: "Pending",
-      joinDate: new Date().toISOString().split('T')[0],
+      join_date: new Date().toISOString().split('T')[0],  // Changed from joinDate to join_date
       skills: newVolunteer.skills.split(',').map(skill => skill.trim())
     });
     setNewVolunteer({

@@ -8,7 +8,7 @@ interface Volunteer {
   email: string;
   role: string;
   status: string;
-  joinDate: string;
+  join_date: string;  // Changed from joinDate to join_date
   phone: string;
   skills: string[];
 }
@@ -54,7 +54,7 @@ const VolunteerList = ({ volunteers, onStatusChange, onViewDetails }: VolunteerL
                   </SelectContent>
                 </Select>
               </TableCell>
-              <TableCell>{volunteer.joinDate}</TableCell>
+              <TableCell>{volunteer.join_date}</TableCell>
               <TableCell className="text-right">
                 <Button 
                   variant="ghost" 

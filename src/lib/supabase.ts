@@ -26,11 +26,14 @@ export async function addVolunteer(volunteer: {
   status: string;
   phone: string;
   skills: string[];
-  joinDate: string;
+  join_date: string;  // Changed from joinDate to join_date
 }) {
   const { data, error } = await supabase
     .from('volunteers')
-    .insert([volunteer])
+    .insert([{
+      ...volunteer,
+      join_date: volunteer.join_date  // Changed from joinDate to join_date
+    }])
     .select();
 
   if (error) {
