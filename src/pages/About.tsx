@@ -1,8 +1,15 @@
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { CheckCircle, Users, Target, Heart, Award, Globe, Sparkles } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchTeamMembers, type TeamMember } from "@/lib/api/team";
 
 const About = () => {
+  const { data: teamMembers = [], isLoading } = useQuery({
+    queryKey: ['teamMembers'],
+    queryFn: fetchTeamMembers
+  });
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -122,31 +129,30 @@ const About = () => {
               Meet the dedicated individuals working to make our vision a reality.
             </p>
           </div>
-          <div className="grid md:grid-cols-4 gap-8">
-            {[
-              { name: "Sarah Johnson", role: "Executive Director", experience: "15+ years in nonprofit leadership" },
-              { name: "Michael Chen", role: "Operations Director", experience: "12+ years in project management" },
-              { name: "Emily Rodriguez", role: "Program Director", experience: "10+ years in community development" },
-              { name: "David Kim", role: "Partnerships Lead", experience: "8+ years in strategic partnerships" }
-            ].map((member, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.2 }}
-              >
-                <Card className="p-6 glass-card text-center">
-                  <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <Users className="w-12 h-12 text-primary" />
-                  </div>
-                  <h3 className="text-lg font-semibold mb-1">{member.name}</h3>
-                  <p className="text-primary mb-2">{member.role}</p>
-                  <p className="text-sm text-secondary/70">{member.experience}</p>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="text-center">Loading team members...</div>
+          ) : (
+            <div className="grid md:grid-cols-4 gap-8">
+              {teamMembers.map((member: TeamMember, index: number) => (
+                <motion.div
+                  key={member.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.2 }}
+                >
+                  <Card className="p-6 glass-card text-center">
+                    <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                      <Users className="w-12 h-12 text-primary" />
+                    </div>
+                    <h3 className="text-lg font-semibold mb-1">{member.name}</h3>
+                    <p className="text-primary mb-2">{member.role}</p>
+                    <p className="text-sm text-secondary/70">{member.experience}</p>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>
