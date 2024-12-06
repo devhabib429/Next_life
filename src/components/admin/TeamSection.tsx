@@ -5,7 +5,7 @@ import { Users, Trash2 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchTeamMembers, addTeamMember, deleteTeamMember } from "@/lib/supabase";
+import { fetchTeamMembers, addTeamMember, deleteTeamMember, type TeamMember } from "@/lib/api/team";
 
 const TeamSection = () => {
   const { toast } = useToast();
@@ -111,7 +111,7 @@ const TeamSection = () => {
           </DialogContent>
         </Dialog>
       </div>
-      {teamMembers.map((member: any) => (
+      {teamMembers.map((member: TeamMember) => (
         <div key={member.id} className="flex justify-between items-center p-4 bg-muted rounded-lg">
           <div>
             <h4 className="font-medium">{member.name}</h4>
