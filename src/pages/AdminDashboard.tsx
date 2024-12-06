@@ -1,16 +1,84 @@
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Users, Settings, FileText, Mail, Globe, Heart, 
   DollarSign, Calendar, BarChart3
 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import ContentManager from "@/components/admin/ContentManager";
 import DonationsManager from "@/components/admin/DonationsManager";
 import VolunteersManager from "@/components/admin/VolunteersManager";
+import { supabase } from "@/lib/supabase";
 
 const AdminDashboard = () => {
+  // Fetch dashboard stats
+  const { data: dashboardStats = {
+    totalDonations: 0,
+    activeVolunteers: 0,
+    totalProjects: 0,
+    totalMessages: 0
+  }, isLoading } = useQuery({
+    queryKey: ['dashboardStats'],
+    queryFn: async () => {
+      // Fetch donations total
+      const { data: donations } = await supabase
+        .from('donations')
+        .select('amount');
+      const totalDonations = donations?.reduce((sum, d) => sum + d.amount, 0) || 0;
+
+      // Count active volunteers
+      const { count: activeVolunteers } = await supabase
+        .from('volunteers')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'Active');
+
+      // Count total projects
+      const { count: totalProjects } = await supabase
+        .from('projects')
+        .select('*', { count: 'exact', head: true });
+
+      // Count total messages
+      const { count: totalMessages } = await supabase
+        .from('messages')
+        .select('*', { count: 'exact', head: true });
+
+      return {
+        totalDonations,
+        activeVolunteers: activeVolunteers || 0,
+        totalProjects: totalProjects || 0,
+        totalMessages: totalMessages || 0
+      };
+    }
+  });
+
+  const stats = [
+    { 
+      label: "Total Donations", 
+      value: `$${dashboardStats.totalDonations.toLocaleString()}`, 
+      icon: DollarSign, 
+      color: "text-emerald-500" 
+    },
+    { 
+      label: "Active Volunteers", 
+      value: dashboardStats.activeVolunteers.toString(), 
+      icon: Users, 
+      color: "text-blue-500" 
+    },
+    { 
+      label: "Projects", 
+      value: dashboardStats.totalProjects.toString(), 
+      icon: FileText, 
+      color: "text-purple-500" 
+    },
+    { 
+      label: "Messages", 
+      value: dashboardStats.totalMessages.toString(), 
+      icon: Mail, 
+      color: "text-amber-500" 
+    }
+  ];
+
   return (
     <div className="min-h-screen py-6">
       <div className="container mx-auto px-4">
@@ -25,12 +93,7 @@ const AdminDashboard = () => {
 
         {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {[
-            { label: "Total Donations", value: "$25,430", icon: DollarSign, color: "text-emerald-500" },
-            { label: "Active Volunteers", value: "142", icon: Users, color: "text-blue-500" },
-            { label: "Projects", value: "23", icon: FileText, color: "text-purple-500" },
-            { label: "Messages", value: "89", icon: Mail, color: "text-amber-500" }
-          ].map((stat, index) => (
+          {stats.map((stat, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -41,7 +104,7 @@ const AdminDashboard = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-secondary/70">{stat.label}</p>
-                    <p className="text-2xl font-bold">{stat.value}</p>
+                    <p className="text-2xl font-bold">{isLoading ? "..." : stat.value}</p>
                   </div>
                   <stat.icon className={`w-8 h-8 ${stat.color}`} />
                 </div>

@@ -176,3 +176,19 @@ export async function deleteAddress(id: number) {
   if (error) throw error;
 }
 
+// Dashboard Stats
+export async function fetchDashboardStats() {
+  const [donations, volunteers, projects, messages] = await Promise.all([
+    supabase.from('donations').select('amount'),
+    supabase.from('volunteers').select('*', { count: 'exact', head: true }).eq('status', 'Active'),
+    supabase.from('projects').select('*', { count: 'exact', head: true }),
+    supabase.from('messages').select('*', { count: 'exact', head: true })
+  ]);
+
+  return {
+    totalDonations: donations.data?.reduce((sum, d) => sum + d.amount, 0) || 0,
+    activeVolunteers: volunteers.count || 0,
+    totalProjects: projects.count || 0,
+    totalMessages: messages.count || 0
+  };
+}
