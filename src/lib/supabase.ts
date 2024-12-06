@@ -5,43 +5,52 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Team Members
-export async function fetchTeamMembers() {
+// Volunteers
+export interface Volunteer {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  status: string;
+  phone: string;
+  skills: string[];
+  join_date: string;
+}
+
+export async function fetchVolunteers(): Promise<Volunteer[]> {
   const { data, error } = await supabase
-    .from('team_members')
+    .from('volunteers')
     .select('*')
     .order('id');
   
   if (error) {
-    console.error('Error fetching team members:', error);
+    console.error('Error fetching volunteers:', error);
     throw error;
   }
-  return data;
+  return data || [];
 }
 
-export async function addTeamMember(member: { name: string; role: string; experience: string }) {
-  console.log('Adding team member:', member);
-  
+export async function addVolunteer(volunteer: Omit<Volunteer, 'id'>) {
   const { data, error } = await supabase
-    .from('team_members')
-    .insert([member])
+    .from('volunteers')
+    .insert([volunteer])
     .select();
 
   if (error) {
-    console.error('Error adding team member:', error);
+    console.error('Error adding volunteer:', error);
     throw error;
   }
   return data[0];
 }
 
-export async function deleteTeamMember(id: number) {
+export async function updateVolunteerStatus(id: number, status: string) {
   const { error } = await supabase
-    .from('team_members')
-    .delete()
+    .from('volunteers')
+    .update({ status })
     .eq('id', id);
-    
+
   if (error) {
-    console.error('Error deleting team member:', error);
+    console.error('Error updating volunteer status:', error);
     throw error;
   }
 }

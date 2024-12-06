@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Download, Filter, Search } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchVolunteers, addVolunteer, updateVolunteerStatus } from "@/lib/supabase";
+import { fetchVolunteers, addVolunteer, updateVolunteerStatus, type Volunteer } from "@/lib/supabase";
 import VolunteerList from "./volunteers/VolunteerList";
 import AddVolunteerDialog from "./volunteers/AddVolunteerDialog";
 import VolunteerDetails from "./volunteers/VolunteerDetails";
@@ -14,7 +14,7 @@ const VolunteersManager = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedVolunteer, setSelectedVolunteer] = useState(null);
+  const [selectedVolunteer, setSelectedVolunteer] = useState<Volunteer | null>(null);
 
   const { data: volunteers = [], isLoading } = useQuery({
     queryKey: ['volunteers'],
