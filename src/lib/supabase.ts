@@ -93,6 +93,15 @@ export async function deleteProjectStat(id: number) {
 }
 
 // Projects
+interface Project {
+  id?: number;
+  title: string;
+  location: string;
+  status: string;
+  participants: string;
+  description: string;
+}
+
 export async function fetchProjects() {
   const { data, error } = await supabase
     .from('projects')
@@ -102,13 +111,7 @@ export async function fetchProjects() {
   return data;
 }
 
-export async function addProject(project: {
-  title: string;
-  location: string;
-  date: string;
-  participants: string;
-  description: string;
-}) {
+export async function addProject(project: Omit<Project, 'id'>) {
   const { data, error } = await supabase
     .from('projects')
     .insert([project])

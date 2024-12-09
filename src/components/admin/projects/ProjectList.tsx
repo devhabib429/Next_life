@@ -12,42 +12,42 @@ const initialProjects = [
   {
     title: "Clean Water Initiative",
     location: "Rural Communities, Africa",
-    date: "Ongoing",
+    status: "Ongoing",
     participants: "2,000+ beneficiaries",
     description: "Providing access to clean water through sustainable infrastructure and community education."
   },
   {
     title: "Education for All",
     location: "Southeast Asia",
-    date: "Active",
+    status: "Active",
     participants: "5,000+ students",
     description: "Building schools and providing educational resources to underserved communities."
   },
   {
     title: "Sustainable Agriculture",
     location: "South America",
-    date: "Ongoing",
+    status: "Ongoing",
     participants: "1,000+ farmers",
     description: "Teaching sustainable farming practices to improve food security and economic stability."
   },
   {
     title: "Healthcare Access",
     location: "Multiple Regions",
-    date: "Active",
+    status: "Active",
     participants: "10,000+ patients",
     description: "Improving access to essential healthcare services in remote areas."
   },
   {
     title: "Youth Empowerment",
     location: "Global",
-    date: "Ongoing",
+    status: "Ongoing",
     participants: "3,000+ youth",
     description: "Providing skills training and mentorship to young people."
   },
   {
     title: "Environmental Conservation",
     location: "Various Locations",
-    date: "Active",
+    status: "Active",
     participants: "100+ communities",
     description: "Protecting natural resources and promoting sustainable practices."
   }
@@ -59,7 +59,7 @@ const ProjectList = () => {
   const [newProject, setNewProject] = useState({
     title: "",
     location: "",
-    date: "",
+    status: "",
     participants: "",
     description: ""
   });
@@ -94,7 +94,6 @@ const ProjectList = () => {
     }
   });
 
-  // Initialize database with hardcoded projects if empty
   useEffect(() => {
     const initializeProjects = async () => {
       if (projects.length === 0 && isInitializing) {
@@ -150,9 +149,9 @@ const ProjectList = () => {
                 onChange={(e) => setNewProject({ ...newProject, location: e.target.value })}
               />
               <Input
-                placeholder="Date"
-                value={newProject.date}
-                onChange={(e) => setNewProject({ ...newProject, date: e.target.value })}
+                placeholder="Status (e.g., Active, Ongoing)"
+                value={newProject.status}
+                onChange={(e) => setNewProject({ ...newProject, status: e.target.value })}
               />
               <Input
                 placeholder="Participants"
@@ -169,7 +168,7 @@ const ProjectList = () => {
                 setNewProject({
                   title: "",
                   location: "",
-                  date: "",
+                  status: "",
                   participants: "",
                   description: ""
                 });
@@ -186,7 +185,7 @@ const ProjectList = () => {
             <div>
               <h4 className="font-medium">{project.title}</h4>
               <p className="text-sm text-muted-foreground">{project.location}</p>
-              <p className="text-sm text-muted-foreground">{project.date}</p>
+              <p className="text-sm text-muted-foreground">{project.status}</p>
               <p className="text-sm text-muted-foreground">{project.participants}</p>
               <p className="text-sm mt-2">{project.description}</p>
             </div>
