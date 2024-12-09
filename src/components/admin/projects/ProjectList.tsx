@@ -2,11 +2,56 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Target } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchProjects, addProject, deleteProject } from "@/lib/supabase";
 import { useToast } from "@/components/ui/use-toast";
+
+const initialProjects = [
+  {
+    title: "Clean Water Initiative",
+    location: "Rural Communities, Africa",
+    date: "Ongoing",
+    participants: "2,000+ beneficiaries",
+    description: "Providing access to clean water through sustainable infrastructure and community education."
+  },
+  {
+    title: "Education for All",
+    location: "Southeast Asia",
+    date: "Active",
+    participants: "5,000+ students",
+    description: "Building schools and providing educational resources to underserved communities."
+  },
+  {
+    title: "Sustainable Agriculture",
+    location: "South America",
+    date: "Ongoing",
+    participants: "1,000+ farmers",
+    description: "Teaching sustainable farming practices to improve food security and economic stability."
+  },
+  {
+    title: "Healthcare Access",
+    location: "Multiple Regions",
+    date: "Active",
+    participants: "10,000+ patients",
+    description: "Improving access to essential healthcare services in remote areas."
+  },
+  {
+    title: "Youth Empowerment",
+    location: "Global",
+    date: "Ongoing",
+    participants: "3,000+ youth",
+    description: "Providing skills training and mentorship to young people."
+  },
+  {
+    title: "Environmental Conservation",
+    location: "Various Locations",
+    date: "Active",
+    participants: "100+ communities",
+    description: "Protecting natural resources and promoting sustainable practices."
+  }
+];
 
 const ProjectList = () => {
   const { toast } = useToast();
@@ -18,6 +63,7 @@ const ProjectList = () => {
     participants: "",
     description: ""
   });
+  const [isInitializing, setIsInitializing] = useState(true);
 
   const { data: projects = [], isLoading: projectsLoading } = useQuery({
     queryKey: ['projects'],
@@ -29,6 +75,14 @@ const ProjectList = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
       toast({ title: "Success", description: "Project added successfully" });
+    },
+    onError: (error) => {
+      console.error('Error adding project:', error);
+      toast({ 
+        title: "Error", 
+        description: "Failed to add project", 
+        variant: "destructive" 
+      });
     }
   });
 
@@ -39,6 +93,30 @@ const ProjectList = () => {
       toast({ title: "Success", description: "Project deleted successfully" });
     }
   });
+
+  // Initialize database with hardcoded projects if empty
+  useEffect(() => {
+    const initializeProjects = async () => {
+      if (projects.length === 0 && isInitializing) {
+        setIsInitializing(false);
+        for (const project of initialProjects) {
+          try {
+            await addProjectMutation.mutateAsync(project);
+          } catch (error) {
+            console.error('Error adding initial project:', error);
+          }
+        }
+        toast({ 
+          title: "Success", 
+          description: "Initial projects have been added to the database" 
+        });
+      }
+    };
+
+    if (!projectsLoading) {
+      initializeProjects();
+    }
+  }, [projects.length, projectsLoading, isInitializing]);
 
   if (projectsLoading) return <div>Loading...</div>;
 
@@ -56,6 +134,9 @@ const ProjectList = () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Add Project</DialogTitle>
+              <DialogDescription>
+                Add a new project to the database. Fill in all fields below.
+              </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
               <Input
