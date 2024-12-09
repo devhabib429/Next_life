@@ -3,9 +3,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Target } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchProjects, addProject, deleteProject } from "@/lib/supabase";
+import { fetchProjects, addProject, deleteProject, Project } from "@/lib/supabase";
 import { useToast } from "@/components/ui/use-toast";
 
 const initialProjects = [
@@ -56,14 +56,13 @@ const initialProjects = [
 const ProjectList = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const [newProject, setNewProject] = useState({
+  const [newProject, setNewProject] = useState<Omit<Project, 'id'>>({
     title: "",
     location: "",
     status: "",
     participants: "",
     description: ""
   });
-  const [isInitializing, setIsInitializing] = useState(true);
 
   const { data: projects = [], isLoading: projectsLoading } = useQuery({
     queryKey: ['projects'],
@@ -76,11 +75,11 @@ const ProjectList = () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
       toast({ title: "Success", description: "Project added successfully" });
     },
-    onError: (error) => {
+    onError: (error: any) => {
       console.error('Error adding project:', error);
       toast({ 
         title: "Error", 
-        description: "Failed to add project", 
+        description: error.message || "Failed to add project", 
         variant: "destructive" 
       });
     }
@@ -94,28 +93,20 @@ const ProjectList = () => {
     }
   });
 
-  useEffect(() => {
-    const initializeProjects = async () => {
-      if (projects.length === 0 && isInitializing) {
-        setIsInitializing(false);
-        for (const project of initialProjects) {
-          try {
-            await addProjectMutation.mutateAsync(project);
-          } catch (error) {
-            console.error('Error adding initial project:', error);
-          }
-        }
-        toast({ 
-          title: "Success", 
-          description: "Initial projects have been added to the database" 
-        });
-      }
-    };
-
-    if (!projectsLoading) {
-      initializeProjects();
+  const handleAddProject = async () => {
+    try {
+      await addProjectMutation.mutateAsync(newProject);
+      setNewProject({
+        title: "",
+        location: "",
+        status: "",
+        participants: "",
+        description: ""
+      });
+    } catch (error) {
+      console.error('Error in handleAddProject:', error);
     }
-  }, [projects.length, projectsLoading, isInitializing]);
+  };
 
   if (projectsLoading) return <div>Loading...</div>;
 
@@ -163,23 +154,14 @@ const ProjectList = () => {
                 value={newProject.description}
                 onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
               />
-              <Button onClick={() => {
-                addProjectMutation.mutate(newProject);
-                setNewProject({
-                  title: "",
-                  location: "",
-                  status: "",
-                  participants: "",
-                  description: ""
-                });
-              }}>
+              <Button onClick={handleAddProject}>
                 Add Project
               </Button>
             </div>
           </DialogContent>
         </Dialog>
       </div>
-      {projects.map((project: any) => (
+      {projects.map((project: Project) => (
         <div key={project.id} className="p-4 bg-muted rounded-lg mb-2">
           <div className="flex justify-between">
             <div>
@@ -192,7 +174,7 @@ const ProjectList = () => {
             <Button
               variant="destructive"
               size="sm"
-              onClick={() => deleteProjectMutation.mutate(project.id)}
+              onClick={() => project.id && deleteProjectMutation.mutate(project.id)}
             >
               Delete
             </Button>

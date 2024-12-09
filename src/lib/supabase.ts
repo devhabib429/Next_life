@@ -5,6 +5,69 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
+// Project types and functions
+export interface Project {
+  id?: number;
+  title: string;
+  location: string;
+  status: string;
+  participants: string;
+  description: string;
+}
+
+export async function initializeProjectsTable() {
+  const { error } = await supabase.rpc('initialize_projects_table');
+  if (error) {
+    console.error('Error initializing projects table:', error);
+    throw error;
+  }
+}
+
+export async function fetchProjects(): Promise<Project[]> {
+  try {
+    const { data, error } = await supabase
+      .from('projects')
+      .select('*')
+      .order('id');
+    
+    if (error) throw error;
+    return data || [];
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+    throw error;
+  }
+}
+
+export async function addProject(project: Omit<Project, 'id'>): Promise<Project> {
+  try {
+    const { data, error } = await supabase
+      .from('projects')
+      .insert([project])
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error('Error adding project:', error);
+    throw error;
+  }
+}
+
+export async function deleteProject(id: number): Promise<void> {
+  try {
+    const { error } = await supabase
+      .from('projects')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+  } catch (error) {
+    console.error('Error deleting project:', error);
+    throw error;
+  }
+}
+
 // Volunteers
 export interface Volunteer {
   id: number;
@@ -87,42 +150,6 @@ export async function addProjectStat(stat: { label: string; value: string }) {
 export async function deleteProjectStat(id: number) {
   const { error } = await supabase
     .from('project_stats')
-    .delete()
-    .eq('id', id);
-  if (error) throw error;
-}
-
-// Projects
-interface Project {
-  id?: number;
-  title: string;
-  location: string;
-  status: string;
-  participants: string;
-  description: string;
-}
-
-export async function fetchProjects() {
-  const { data, error } = await supabase
-    .from('projects')
-    .select('*')
-    .order('id');
-  if (error) throw error;
-  return data;
-}
-
-export async function addProject(project: Omit<Project, 'id'>) {
-  const { data, error } = await supabase
-    .from('projects')
-    .insert([project])
-    .select();
-  if (error) throw error;
-  return data[0];
-}
-
-export async function deleteProject(id: number) {
-  const { error } = await supabase
-    .from('projects')
     .delete()
     .eq('id', id);
   if (error) throw error;
